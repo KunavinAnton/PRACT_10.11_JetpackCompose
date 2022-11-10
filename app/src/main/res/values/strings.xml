@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">JetpackCompose_Kunavin_PR33</string>
+    
+    <string name="general_activity_title">Список дел</string>
+</resources>
