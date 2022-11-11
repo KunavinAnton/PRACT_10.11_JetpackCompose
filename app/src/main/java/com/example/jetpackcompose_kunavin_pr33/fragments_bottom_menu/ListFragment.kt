@@ -20,7 +20,7 @@ fun ListFragment(){
         color = MaterialTheme.colors.background
     ) {
         Column(Modifier.background(Green), verticalArrangement = Arrangement.SpaceBetween) {
-            GeneralActivityHead("Список дел")
+            GeneralActivityHead("Список дел", R.drawable.avatar, 28, 68, 28)
             Conversation(messages)
             AddButton(name = "Добавить задачу", color = LightGreen, textSize = 22, paddingTop = 68)
         }

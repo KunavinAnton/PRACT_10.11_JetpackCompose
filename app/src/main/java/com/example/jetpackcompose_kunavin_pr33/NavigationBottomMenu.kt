@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.jetpackcompose_kunavin_pr33.fragments.ProfileFragment
 import com.example.jetpackcompose_kunavin_pr33.fragments_bottom_menu.AlarmFragment
 import com.example.jetpackcompose_kunavin_pr33.fragments_bottom_menu.CalendarFragment
 import com.example.jetpackcompose_kunavin_pr33.fragments_bottom_menu.ListFragment
@@ -24,6 +25,9 @@ fun NavigationBottomMenu(navController: NavHostController) {
         }
         composable(route = NavigationItems.Settings.route){
             SettingsFragment()
+        }
+        composable(route = "profile"){
+            ProfileFragment()
         }
     }
 }

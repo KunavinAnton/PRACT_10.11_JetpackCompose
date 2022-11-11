@@ -29,7 +29,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcompose_kunavin_pr33.fragments_bottom_menu.ListFragment
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.*
 
-
 data class MessageItem(val title: String, val description: String, val date: String, val time: String)
 
 class MainActivity : ComponentActivity() {
@@ -62,6 +61,6 @@ fun MainScreen() {
 @Composable
 fun DefaultPreview() {
     JetpackCompose_Kunavin_PR33Theme {
-        AddSwitch(time = "07:30")
+        AddSettingsElement(name = "qweqweqe123qweqweqwe")
     }
 }

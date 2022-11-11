@@ -19,7 +19,7 @@ fun CalendarFragment(){
         color = MaterialTheme.colors.background
     ) {
         Column(Modifier.background(Green), verticalArrangement = Arrangement.SpaceBetween) {
-            GeneralActivityHead("Календарь")
+            GeneralActivityHead("Календарь", R.drawable.avatar, 28, 68, 28)
             AddCalendar()
         }
     }

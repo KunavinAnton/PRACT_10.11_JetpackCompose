@@ -1,24 +1,24 @@
 package com.example.jetpackcompose_kunavin_pr33
 
+import android.app.Activity
 import android.widget.CalendarView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -27,7 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.*
+
 
 //Список дел :)
 val messages:List<MessageItem> = listOf(
@@ -133,12 +135,15 @@ fun Conversation(messages: List<MessageItem>) {
 //Добавить кнопку с заданием параметров
 @Composable
 fun AddButton(name:String, color: Color, textSize: Int, paddingTop:Int){
+    val navController = rememberNavController()
     Row(modifier = Modifier
-        .padding(bottom = 4.dp, top = paddingTop.dp, start = 28.dp, end = 28.dp)
-        .size(428.dp, 78.dp))
+        .padding(bottom = 4.dp, top = paddingTop.dp, start = 32.dp, end = 32.dp)
+        .size(428.dp, 58.dp))
     {
         Button(
-            onClick = {},
+            onClick = {
+
+            },
             colors = ButtonDefaults.buttonColors(color),
             modifier = Modifier
                 .fillMaxWidth()
@@ -153,27 +158,34 @@ fun AddButton(name:String, color: Color, textSize: Int, paddingTop:Int){
 
 //Задание шапки для activity
 @Composable
-fun GeneralActivityHead(name:String){
+fun GeneralActivityHead(name:String, paintRes:Int, fontSize:Int, imageSize:Int, paddingStart: Int){
+    val navController = rememberNavController()
     Row(modifier = Modifier
         .padding(bottom = 28.dp, top = 4.dp, start = 4.dp, end = 4.dp)
         .size(428.dp, 78.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween){
-        Text(text = name, style = TextStyle(color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center), modifier = Modifier.padding(28.dp, 0.dp, 0.dp, 8.dp))
-        Image(painter = painterResource(id = R.drawable.avatar),
+        Text(text = name, style = TextStyle(color = Color.White, fontSize = fontSize.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center), modifier = Modifier.padding(paddingStart.dp, 0.dp, 0.dp, 8.dp))
+        Image(painter = painterResource(id = paintRes),
             contentDescription = "Avatar",
             modifier = Modifier
                 .padding(start = 8.dp, top = 8.dp, bottom = 8.dp, end = 8.dp)
-                .size(68.dp)
-                .clip(CircleShape))
+                .size(imageSize.dp)
+                .clip(CircleShape)
+                .clickable(
+                    enabled = true,
+                    onClick = {
+
+                    }
+                ))
     }
 }
 
 @Composable
 fun AddSwitch(time:String){
     Row(modifier = Modifier
-        .padding(bottom = 28.dp, top = 4.dp, start = 4.dp, end = 4.dp)
-        .size(428.dp, 88.dp),
+        .padding(bottom = 8.dp, top = 4.dp, start = 4.dp, end = 18.dp)
+        .size(428.dp, 68.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween) {
         Text(text = time,
@@ -183,7 +195,17 @@ fun AddSwitch(time:String){
             modifier = Modifier.padding(28.dp, 0.dp, 0.dp, 8.dp))
         val checkedState = remember { mutableStateOf(false) }
         Switch( checked = checkedState.value,
-            modifier = Modifier.size(64.dp, 64.dp),
+            modifier = Modifier
+                .size(64.dp, 32.dp)
+                .background(
+                    color = if (checkedState.value) {
+                        LightGreen
+                    } else {
+                        Red
+                    },
+                    shape = RoundedCornerShape(25.dp)
+                )
+                .padding(bottom = 2.dp, top = 2.dp),
             onCheckedChange = {checkedState.value = it},
             colors = SwitchDefaults.colors(
             checkedThumbColor = Color.White,
@@ -201,9 +223,34 @@ fun AddCalendar(){
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
-        AndroidView(factory = {CalendarView(it)}, update = {
+        AndroidView(factory = {CalendarView(it)},
+            update = {
             it.setOnDateChangeListener{ calendarView, year, month, day ->
             }
-        })
+        }, modifier = Modifier.wrapContentSize())
+    }
+}
+
+@Composable
+fun AddSettingsElement(name:String){
+    Row(modifier = Modifier
+        .size(428.dp, 62.dp)
+        .background(Green)
+        .padding(bottom = 18.dp, start = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically) {
+        Text(text = name,
+            style = TextStyle(color = Color.White,
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center))
+        Image(painter = painterResource(id = R.drawable.arrow), contentDescription = "settings", modifier = Modifier.padding(top = 8.dp, end = 18.dp))
+    }
+}
+
+@Composable
+fun AddProfileIcon(){
+    Column(modifier = Modifier.size(428.dp, 288.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(painter = painterResource(id = R.drawable.avatar), contentDescription = "avatar", Modifier.size(248.dp, 248.dp))
+        Text(text = "Вход не выполнен", style = TextStyle(color = Color.White, fontSize = 18.sp), modifier = Modifier.padding(top = 18.dp))
     }
 }
