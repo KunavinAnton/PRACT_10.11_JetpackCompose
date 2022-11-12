@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcompose_kunavin_pr33.fragments_bottom_menu.ListFragment
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.*
@@ -34,33 +35,10 @@ data class MessageItem(val title: String, val description: String, val date: Str
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             JetpackCompose_Kunavin_PR33Theme {
-                MainScreen()
+               MainScreen()
             }
         }
-    }
-}
-
-@Composable
-fun MainScreen() {
-    val navController = rememberNavController()
-    Scaffold(
-        bottomBar = { AddBottomMenu(navController) },
-        content = { padding ->
-            Box(modifier = Modifier.padding(padding)) {
-                NavigationBottomMenu(navController = navController)
-            }
-        },
-        backgroundColor = Green
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    JetpackCompose_Kunavin_PR33Theme {
-        AddSettingsElement(name = "qweqweqe123qweqweqwe")
     }
 }

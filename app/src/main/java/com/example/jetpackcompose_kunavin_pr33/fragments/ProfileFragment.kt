@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.jetpackcompose_kunavin_pr33.*
 import com.example.jetpackcompose_kunavin_pr33.fragments_bottom_menu.ListFragment
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.Green
@@ -19,34 +20,27 @@ import com.example.jetpackcompose_kunavin_pr33.ui.theme.JetpackCompose_Kunavin_P
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.LightGreen
 
 @Composable
-fun ProfileFragment(){
+fun ProfileFragment(navController: NavController){
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
+        color = Green
     ) {
-        Column(Modifier.background(Green), verticalArrangement = Arrangement.SpaceBetween) {
-            GeneralActivityHead("Профиль пользователя", R.drawable.back_button, 28, 58, 8)
+        Column(verticalArrangement = Arrangement.SpaceBetween) {
+            GeneralActivityHead(navController ,"Профиль пользователя", R.drawable.back_button, 28, 58, 8, NavigationItems.List)
             AddProfileIcon()
             Column(modifier = Modifier.size(428.dp, 198.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                AddButton(name = "Войти", color = LightGreen, textSize = 24, paddingTop = 18)
-                AddButton(name = "Регистрация", color = LightGreen, textSize = 24, paddingTop = 8)
+                AddButton(navController, "Войти",  LightGreen,  24, 18, NavigationItems.UserLogin)
+                AddButton(navController, "Регистрация", LightGreen, 24, 8, NavigationItems.UserRegistration)
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    JetpackCompose_Kunavin_PR33Theme {
-        AddButton(name = "Войти", color = LightGreen, textSize = 24, paddingTop = 28)
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
 fun MainActivity() {
     JetpackCompose_Kunavin_PR33Theme {
-        ProfileFragment()
+
     }
 }

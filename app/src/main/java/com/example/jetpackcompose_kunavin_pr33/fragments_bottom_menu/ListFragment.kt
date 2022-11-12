@@ -4,25 +4,27 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.jetpackcompose_kunavin_pr33.*
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.Green
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.LightGreen
 
-
 @Composable
-fun ListFragment(){
+fun ListFragment(navController: NavController){
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
+        color = Green
     ) {
-        Column(Modifier.background(Green), verticalArrangement = Arrangement.SpaceBetween) {
-            GeneralActivityHead("Список дел", R.drawable.avatar, 28, 68, 28)
-            Conversation(messages)
-            AddButton(name = "Добавить задачу", color = LightGreen, textSize = 22, paddingTop = 68)
+        Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.padding(bottom = 18.dp)) {
+            GeneralActivityHead(navController,"Список дел", R.drawable.avatar, 28, 68, 28)
+            Conversation(navController, messages, NavigationItems.EditTask)
+            AddButton(navController,"Добавить задачу", LightGreen,22, 48, NavigationItems.AddTask)
         }
     }
 }

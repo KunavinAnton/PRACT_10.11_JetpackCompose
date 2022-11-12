@@ -8,18 +8,19 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import com.example.jetpackcompose_kunavin_pr33.*
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.Green
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.LightGreen
 
 @Composable
-fun CalendarFragment(){
+fun CalendarFragment(navController: NavController){
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
+        color = Green
     ) {
-        Column(Modifier.background(Green), verticalArrangement = Arrangement.SpaceBetween) {
-            GeneralActivityHead("Календарь", R.drawable.avatar, 28, 68, 28)
+        Column(verticalArrangement = Arrangement.SpaceBetween) {
+            GeneralActivityHead(navController,"Календарь", R.drawable.avatar, 28, 68, 28)
             AddCalendar()
         }
     }

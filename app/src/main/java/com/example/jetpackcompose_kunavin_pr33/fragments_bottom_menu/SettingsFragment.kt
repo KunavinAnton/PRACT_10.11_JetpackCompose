@@ -9,25 +9,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.jetpackcompose_kunavin_pr33.*
 import com.example.jetpackcompose_kunavin_pr33.R
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.Green
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.LightGreen
 
 @Composable
-fun SettingsFragment(){
+fun SettingsFragment(navController: NavController){
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
+        color = Green
     ) {
-        Column(Modifier.background(Green), verticalArrangement = Arrangement.SpaceBetween) {
-            GeneralActivityHead("Настройки", R.drawable.avatar, 28, 68, 28)
+        Column(verticalArrangement = Arrangement.SpaceBetween) {
+            GeneralActivityHead(navController,"Настройки", R.drawable.avatar, 28, 68, 28)
             Column(modifier = Modifier.size(428.dp, 578.dp)) {
                 AddSettingsElement(name = "Профиль пользователя")
                 AddSettingsElement(name = "Дата и время")
                 AddSettingsElement(name = "Настройка звука")
                 AddSettingsElement(name = "Проверить обновления")
-
             }
         }
     }
