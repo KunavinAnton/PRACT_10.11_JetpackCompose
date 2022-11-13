@@ -29,7 +29,7 @@ fun UserRegistrationFragment(navController: NavController){
                 Spacer(modifier = Modifier.padding(bottom = 8.dp))
                 AddTextField(hint = "Пароль", sizeWidth = 348.dp, sizeHeight = 48.dp, keyboardType = KeyboardType.Password)
                 Spacer(modifier = Modifier.padding(bottom = 8.dp))
-                AddButton(navController, "Регистрация", LightGreen, 22, 8, NavigationItems.List)
+                AddButton(navController, "Регистрация", LightGreen, 22, 8, NavigationItems.Profile)
             }
         }
     }

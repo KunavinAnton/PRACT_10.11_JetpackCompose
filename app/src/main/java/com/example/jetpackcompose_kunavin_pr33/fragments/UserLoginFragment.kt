@@ -27,7 +27,7 @@ fun UserLoginFragment(navController: NavController){
                 Spacer(modifier = Modifier.padding(bottom = 8.dp))
                 AddTextField(hint = "Пароль", sizeWidth = 348.dp, sizeHeight = 48.dp, keyboardType = KeyboardType.Password)
                 Spacer(modifier = Modifier.padding(bottom = 8.dp))
-                AddButton(navController, "Войти", LightGreen, 22, 8, NavigationItems.List)
+                AddButton(navController, "Войти", LightGreen, 22, 8, NavigationItems.Profile)
             }
         }
     }
