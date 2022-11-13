@@ -5,6 +5,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.jetpackcompose_kunavin_pr33.*
@@ -19,25 +20,22 @@ fun CreateAlarmFragment(navController: NavController){
         modifier = Modifier.fillMaxSize(),
         color = Green
     ) {
-        Column(verticalArrangement = Arrangement.SpaceBetween) {
+        Column() {
             GeneralActivityHead(navController ,"Добавить будильник", R.drawable.back_button, 28, 58, 18, NavigationItems.Alarm)
-            Column(modifier = Modifier.size(428.dp, 478.dp), horizontalAlignment = Alignment.CenterHorizontally){
+            Column(modifier = Modifier.size(428.dp, 598.dp), horizontalAlignment = Alignment.CenterHorizontally){
                 Row(modifier = Modifier
-                    .size(318.dp, 58.dp)
+                    .size(348.dp, 58.dp)
                     .padding(top = 8.dp)) {
-                    AddTextFieldIcon(hint = "16:30", sizeWidth = 158.dp, sizeHeight = 48.dp, icon = R.drawable.alarm_icon)
-                    AddTextFieldIcon(hint = "14.01.2021", sizeWidth = 158.dp, sizeHeight = 48.dp, icon = R.drawable.calendar_icon)
+                    AddTextFieldIcon(hint = "16:30", sizeWidth = 174.dp, sizeHeight = 48.dp, icon = R.drawable.alarm_icon, keyboardType = KeyboardType.Number)
+                    Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                    AddTextFieldIcon(hint = "14.01.2021", sizeWidth = 174.dp, sizeHeight = 48.dp, icon = R.drawable.calendar_icon, keyboardType = KeyboardType.Number)
                 }
                 Row(modifier = Modifier
-                    .size(318.dp, 378.dp)
+                    .size(348.dp, 338.dp)
                     .padding(top = 8.dp, bottom = 8.dp)) {
                     AddCheckBoxes(list = list)
                 }
-            }
-            Column(modifier = Modifier
-                .size(428.dp, 198.dp)
-                .padding(top = 28.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                AddButton(navController, "Создать будильник", LightGreen, 22, 8, NavigationItems.Alarm)
+                AddButton(navController, "Создать будильник", LightGreen, 22, 58, NavigationItems.Alarm)
             }
         }
     }

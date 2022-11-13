@@ -1,8 +1,12 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.jetpackcompose_kunavin_pr33
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.res.Resources
 import android.view.ContextThemeWrapper
+import android.view.ViewGroup
 import android.widget.CalendarView
 import android.window.OnBackInvokedCallback
 import android.window.OnBackInvokedDispatcher
@@ -15,6 +19,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -28,18 +33,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.view.size
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcompose_kunavin_pr33.fragments.EditAlarmFragment
 import com.example.jetpackcompose_kunavin_pr33.ui.theme.*
+import java.util.*
 
 
 //Список дел :)
@@ -111,9 +119,9 @@ fun AddBottomMenu(navController: NavController){
 fun ElementViewTask(navController: NavController, msg:MessageItem, navigateItem:NavigationItems){
     Card(modifier = Modifier
         .size(428.dp, 108.dp)
-        .clickable (
+        .clickable(
             onClick = {
-                navController.navigate(navigateItem.route){
+                navController.navigate(navigateItem.route) {
                     navController.graph.startDestinationRoute?.let { route ->
                         popUpTo(route) {
                             saveState = true
@@ -228,19 +236,21 @@ fun AddSwitch(navController: NavController, time:String, navigateItem:Navigation
             style = TextStyle(color = Color.White,
                 fontSize = 48.sp,
                 textAlign = TextAlign.Center),
-            modifier = Modifier.padding(28.dp, 0.dp, 0.dp, 8.dp).clickable(
-                onClick = {
-                    navController.navigate(navigateItem.route){
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
+            modifier = Modifier
+                .padding(28.dp, 0.dp, 0.dp, 8.dp)
+                .clickable(
+                    onClick = {
+                        navController.navigate(navigateItem.route) {
+                            navController.graph.startDestinationRoute?.let { route ->
+                                popUpTo(route) {
+                                    saveState = true
+                                }
                             }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
-                }
-            ))
+                ))
         val checkedState = remember { mutableStateOf(false) }
         Switch( checked = checkedState.value,
             modifier = Modifier
@@ -264,20 +274,27 @@ fun AddSwitch(navController: NavController, time:String, navigateItem:Navigation
     }
 }
 
+@SuppressLint("ResourceType")
 @Composable
 fun AddCalendar(){
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxWidth().height(398.dp).padding(bottom = 48.dp)
     ) {
-        AndroidView(factory = {CalendarView(it)},
+        AndroidView(factory = {CalendarView(it).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        }},
             update = {
-            it.setOnDateChangeListener{ calendarView, year, month, day ->
+            it.setOnDateChangeListener{ _, _, _, _ ->
             }
         }, modifier = Modifier.wrapContentSize())
     }
 }
+
 
 @Composable
 fun AddSettingsElement(name:String){
@@ -304,16 +321,15 @@ fun AddProfileIcon(){
 }
 
 @Composable
-fun AddTextField(hint: String, sizeWidth: Dp, sizeHeight: Dp, singleLine:Boolean = true){
+fun AddTextField(hint: String, sizeWidth: Dp, sizeHeight: Dp, singleLine:Boolean = true, keyboardType:KeyboardType = KeyboardType.Text){
     val message = remember{mutableStateOf("")}
     OutlinedTextField(
         modifier = Modifier
-            .size(sizeWidth, sizeHeight)
-            .padding(horizontal = 8.dp),
+            .size(sizeWidth, sizeHeight),
         value = message.value,
         onValueChange =  { message.value = it },
-        textStyle = TextStyle(color = Color.Gray, fontSize = 16.sp),
-        placeholder = { Text(hint, style = TextStyle(color = Color.Gray, fontSize = 16.sp))},
+        textStyle = TextStyle(color = Color.Gray, fontSize = 14.sp),
+        placeholder = { Text(hint, style = TextStyle(color = Color.Gray, fontSize = 14.sp))},
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Color.Gray,
             unfocusedBorderColor = LightGray,
@@ -321,20 +337,21 @@ fun AddTextField(hint: String, sizeWidth: Dp, sizeHeight: Dp, singleLine:Boolean
             leadingIconColor = Color.Gray,
             cursorColor = Color.Gray
         ),
-        singleLine = singleLine
+        singleLine = singleLine,
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType)
     )
 }
+
 @Composable
-fun AddTextFieldIcon(hint: String, sizeWidth: Dp, sizeHeight: Dp, icon: Int = -1, singleLine:Boolean = true){
+fun AddTextFieldIcon(hint: String, sizeWidth: Dp, sizeHeight: Dp, icon: Int = -1, singleLine:Boolean = true, keyboardType:KeyboardType = KeyboardType.Text){
     val message = remember{mutableStateOf("")}
     OutlinedTextField(
         modifier = Modifier
-            .size(sizeWidth, sizeHeight)
-            .padding(horizontal = 8.dp),
+            .size(sizeWidth, sizeHeight),
         value = message.value,
         onValueChange =  { message.value = it },
-        textStyle = TextStyle(color = Color.Gray, fontSize = 16.sp),
-        placeholder = { Text(hint, style = TextStyle(color = Color.Gray, fontSize = 16.sp))},
+        textStyle = TextStyle(color = Color.Gray, fontSize = 14.sp),
+        placeholder = { Text(hint, style = TextStyle(color = Color.Gray, fontSize = 14.sp))},
         leadingIcon = { if(icon != -1) Icon(modifier = Modifier.size(20.dp,20.dp), painter = painterResource(id = icon), contentDescription = "date") },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Color.Gray,
@@ -343,7 +360,8 @@ fun AddTextFieldIcon(hint: String, sizeWidth: Dp, sizeHeight: Dp, icon: Int = -1
             leadingIconColor = Color.Gray,
             cursorColor = Color.Gray
         ),
-        singleLine = singleLine
+        singleLine = singleLine,
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType)
     )
 }
 
@@ -353,7 +371,7 @@ var list = listOf("Понедельник", "Вторник", "Среда", "Ч�
 fun AddCheckBox(name:String){
     val checkedState = remember { mutableStateOf(false) }
     Row(modifier = Modifier
-        .size(198.dp, 48.dp)
+        .size(198.dp, 38.dp)
         .background(Green)
         .padding(start = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         Checkbox(
@@ -374,7 +392,9 @@ fun AddCheckBox(name:String){
 
 @Composable
 fun AddCheckBoxes(list:List<String>){
-    Column(modifier = Modifier.size(208.dp, 368.dp).background(Green), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = Modifier
+        .size(208.dp, 368.dp)
+        .background(Green), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Повторять каждый:", style = TextStyle(fontSize = 18.sp, color = Color.White), modifier = Modifier.padding(end = 28.dp))
         LazyColumn {
             list.map { item { AddCheckBox(it) } }
@@ -386,6 +406,6 @@ fun AddCheckBoxes(list:List<String>){
 @Composable
 fun DefaultPreview() {
     JetpackCompose_Kunavin_PR33Theme {
-        AddCheckBoxes(list)
+
     }
 }
