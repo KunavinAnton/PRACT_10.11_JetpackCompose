@@ -22,7 +22,7 @@ fun EditAlarmFragment(navController: NavController){
         color = Green
     ) {
         Column(verticalArrangement = Arrangement.SpaceBetween) {
-            GeneralActivityHead(navController ,"Изменить будильник", R.drawable.back_button, 28, 58, 18, NavigationItems.Alarm)
+            GeneralActivityHead(navController ,"Изменить будильник", R.drawable.back_button, 28, 58, 18, navigateItem = NavigationItems.Alarm)
             Column(modifier = Modifier.size(428.dp, 598.dp), horizontalAlignment = Alignment.CenterHorizontally){
                 Row(modifier = Modifier.size(348.dp, 58.dp).padding(top = 8.dp)) {
                     AddTextFieldIcon(hint = "16:30", sizeWidth = 174.dp, sizeHeight = 48.dp, icon = R.drawable.alarm_icon, keyboardType = KeyboardType.Number)

@@ -21,7 +21,7 @@ fun CreateAlarmFragment(navController: NavController){
         color = Green
     ) {
         Column() {
-            GeneralActivityHead(navController ,"Добавить будильник", R.drawable.back_button, 28, 58, 18, NavigationItems.Alarm)
+            GeneralActivityHead(navController ,"Добавить будильник", R.drawable.back_button, 28, 58, 18, navigateItem = NavigationItems.Alarm)
             Column(modifier = Modifier.size(428.dp, 598.dp), horizontalAlignment = Alignment.CenterHorizontally){
                 Row(modifier = Modifier
                     .size(348.dp, 58.dp)

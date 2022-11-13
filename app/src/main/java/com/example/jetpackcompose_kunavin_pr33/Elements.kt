@@ -51,16 +51,19 @@ import java.util.*
 
 
 //Список дел :)
-val messages:List<MessageItem> = listOf(
+val messages: List<MessageItem> = listOf(
     MessageItem("Вечерний поход в кино", "Идем в кино с коллегами!", "10.02.2021", "19:40"),
     MessageItem("Забрать заказ Ozon", "Пункт выдачи на ул. Ленина, 103", "10.02.2021", "19:40"),
-    MessageItem("Запись в автосервис", "Сдать автомобиль в автосервис на ул." + "Бисертская, д. 14. Замена масла", "10.02.2021", "19:40"),
+    MessageItem("Запись в автосервис",
+        "Сдать автомобиль в автосервис на ул." + "Бисертская, д. 14. Замена масла",
+        "10.02.2021",
+        "19:40"),
 )
 
 
 //Добавление нижнего меню
 @Composable
-fun AddBottomMenu(navController: NavController){
+fun AddBottomMenu(navController: NavController) {
     val listFragments = listOf(
         NavigationItems.List,
         NavigationItems.Alarm,
@@ -89,16 +92,19 @@ fun AddBottomMenu(navController: NavController){
             backgroundColor = LightGreen,
             contentColor = Color.White
         ) {
-            listFragments.forEach{ item ->
+            listFragments.forEach { item ->
                 BottomNavigationItem(
-                    icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
+                    icon = {
+                        Icon(painterResource(id = item.icon),
+                            contentDescription = item.title)
+                    },
                     label = { Text(text = item.title) },
                     selected = false,
                     selectedContentColor = Green,
                     unselectedContentColor = Red,
                     alwaysShowLabel = true,
                     onClick = {
-                        navController.navigate(item.route){
+                        navController.navigate(item.route) {
                             navController.graph.startDestinationRoute?.let { route ->
                                 popUpTo(route) {
                                     saveState = true
@@ -116,7 +122,7 @@ fun AddBottomMenu(navController: NavController){
 
 //Отображение задачи
 @Composable
-fun ElementViewTask(navController: NavController, msg:MessageItem, navigateItem:NavigationItems){
+fun ElementViewTask(navController: NavController, msg: MessageItem, navigateItem: NavigationItems) {
     Card(modifier = Modifier
         .size(428.dp, 108.dp)
         .clickable(
@@ -132,12 +138,14 @@ fun ElementViewTask(navController: NavController, msg:MessageItem, navigateItem:
                 }
             }
         )
-        .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 12.dp), shape = RoundedCornerShape(
-        topEnd = 0.dp,
-        topStart = 24.dp,
-        bottomStart = 0.dp,
-        bottomEnd = 24.dp
-    ), elevation = 8.dp)
+        .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 12.dp),
+        shape = RoundedCornerShape(
+            topEnd = 0.dp,
+            topStart = 24.dp,
+            bottomStart = 0.dp,
+            bottomEnd = 24.dp
+        ),
+        elevation = 8.dp)
     {
         Row(modifier = Modifier
             .size(428.dp, 108.dp)
@@ -148,7 +156,8 @@ fun ElementViewTask(navController: NavController, msg:MessageItem, navigateItem:
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = msg.description, style = TextStyle(fontSize = 13.sp, color = LightGray))
             }
-            Column(modifier = Modifier.size(108.dp, 88.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(modifier = Modifier.size(108.dp, 88.dp),
+                horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = msg.date, style = TextStyle(fontSize = 18.sp, color = LightGray))
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = msg.time, style = TextStyle(fontSize = 13.sp, color = LightGray))
@@ -159,22 +168,33 @@ fun ElementViewTask(navController: NavController, msg:MessageItem, navigateItem:
 
 //Отображение нескольких задач из листа
 @Composable
-fun Conversation(navController: NavController, messages: List<MessageItem>, navigateItem:NavigationItems) {
-    LazyColumn{
+fun Conversation(
+    navController: NavController,
+    messages: List<MessageItem>,
+    navigateItem: NavigationItems,
+) {
+    LazyColumn {
         messages.map { item { ElementViewTask(navController, it, navigateItem) } }
     }
 }
 
 //Добавить кнопку с заданием параметров
 @Composable
-fun AddButton(navController: NavController, name:String, color: Color, textSize: Int, paddingTop:Int, navigateItem:NavigationItems){
+fun AddButton(
+    navController: NavController,
+    name: String,
+    color: Color,
+    textSize: Int,
+    paddingTop: Int,
+    navigateItem: NavigationItems,
+) {
     Row(modifier = Modifier
         .padding(bottom = 4.dp, top = paddingTop.dp, start = 32.dp, end = 32.dp)
         .size(428.dp, 58.dp))
     {
         Button(
             onClick = {
-                navController.navigate(navigateItem.route){
+                navController.navigate(navigateItem.route) {
                     navController.graph.startDestinationRoute?.let { route ->
                         popUpTo(route) {
                             saveState = true
@@ -198,13 +218,26 @@ fun AddButton(navController: NavController, name:String, color: Color, textSize:
 
 //Задание шапки для activity
 @Composable
-fun GeneralActivityHead(navController: NavController ,name:String, paintRes:Int, fontSize:Int, imageSize:Int, paddingStart: Int, navigateItem: NavigationItems = NavigationItems.List){
+fun GeneralActivityHead(
+    navController: NavController,
+    name: String,
+    paintRes: Int,
+    fontSize: Int,
+    imageSize: Int,
+    paddingStart: Int,
+    navigateItem: NavigationItems = NavigationItems.List,
+) {
     Row(modifier = Modifier
         .padding(bottom = 28.dp, top = 4.dp, start = 4.dp, end = 4.dp)
         .size(428.dp, 78.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween){
-        Text(text = name, style = TextStyle(color = Color.White, fontSize = fontSize.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center), modifier = Modifier.padding(paddingStart.dp, 0.dp, 0.dp, 8.dp))
+        horizontalArrangement = Arrangement.SpaceBetween) {
+        Text(text = name,
+            style = TextStyle(color = Color.White,
+                fontSize = fontSize.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center),
+            modifier = Modifier.padding(paddingStart.dp, 0.dp, 0.dp, 8.dp))
         Image(painter = painterResource(id = paintRes),
             contentDescription = "Avatar",
             modifier = Modifier
@@ -219,14 +252,22 @@ fun GeneralActivityHead(navController: NavController ,name:String, paintRes:Int,
                                 R.drawable.avatar -> NavigationItems.Profile.route
                                 else -> navigateItem.route
                             }
-                        )
+                        ){
+                            navController.graph.startDestinationRoute?.let { route ->
+                                popUpTo(route) {
+                                    saveState = true
+                                }
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 ))
     }
 }
 
 @Composable
-fun AddSwitch(navController: NavController, time:String, navigateItem:NavigationItems){
+fun AddSwitch(navController: NavController, time: String, navigateItem: NavigationItems) {
     Row(modifier = Modifier
         .padding(bottom = 8.dp, top = 4.dp, start = 4.dp, end = 18.dp)
         .size(428.dp, 68.dp),
@@ -252,7 +293,7 @@ fun AddSwitch(navController: NavController, time:String, navigateItem:Navigation
                     }
                 ))
         val checkedState = remember { mutableStateOf(false) }
-        Switch( checked = checkedState.value,
+        Switch(checked = checkedState.value,
             modifier = Modifier
                 .size(64.dp, 32.dp)
                 .background(
@@ -264,40 +305,45 @@ fun AddSwitch(navController: NavController, time:String, navigateItem:Navigation
                     shape = RoundedCornerShape(25.dp)
                 )
                 .padding(bottom = 2.dp, top = 2.dp),
-            onCheckedChange = {checkedState.value = it},
+            onCheckedChange = { checkedState.value = it },
             colors = SwitchDefaults.colors(
-            checkedThumbColor = Color.White,
-            checkedTrackColor = LightGreen,
-            uncheckedThumbColor = Color.White,
-            uncheckedTrackColor = Red
-        ))
+                checkedThumbColor = Color.White,
+                checkedTrackColor = LightGreen,
+                uncheckedThumbColor = Color.White,
+                uncheckedTrackColor = Red
+            ))
     }
 }
 
 @SuppressLint("ResourceType")
 @Composable
-fun AddCalendar(){
+fun AddCalendar() {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth().height(398.dp).padding(bottom = 48.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(398.dp)
+            .padding(bottom = 48.dp)
     ) {
-        AndroidView(factory = {CalendarView(it).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }},
-            update = {
-            it.setOnDateChangeListener{ _, _, _, _ ->
+        AndroidView(factory = {
+            CalendarView(it).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
             }
-        }, modifier = Modifier.wrapContentSize())
+        },
+            update = {
+                it.setOnDateChangeListener { _, _, _, _ ->
+                }
+            }, modifier = Modifier.wrapContentSize())
     }
 }
 
 
 @Composable
-fun AddSettingsElement(name:String){
+fun AddSettingsElement(name: String) {
     Row(modifier = Modifier
         .size(428.dp, 62.dp)
         .background(Green)
@@ -308,28 +354,41 @@ fun AddSettingsElement(name:String){
             style = TextStyle(color = Color.White,
                 fontSize = 24.sp,
                 textAlign = TextAlign.Center))
-        Image(painter = painterResource(id = R.drawable.arrow), contentDescription = "settings", modifier = Modifier.padding(top = 8.dp, end = 18.dp))
+        Image(painter = painterResource(id = R.drawable.arrow),
+            contentDescription = "settings",
+            modifier = Modifier.padding(top = 8.dp, end = 18.dp))
     }
 }
 
 @Composable
-fun AddProfileIcon(){
-    Column(modifier = Modifier.size(428.dp, 288.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(painter = painterResource(id = R.drawable.avatar), contentDescription = "avatar", Modifier.size(248.dp, 248.dp))
-        Text(text = "Вход не выполнен", style = TextStyle(color = Color.White, fontSize = 18.sp), modifier = Modifier.padding(top = 18.dp))
+fun AddProfileIcon() {
+    Column(modifier = Modifier.size(428.dp, 288.dp),
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(painter = painterResource(id = R.drawable.avatar),
+            contentDescription = "avatar",
+            Modifier.size(248.dp, 248.dp))
+        Text(text = "Вход не выполнен",
+            style = TextStyle(color = Color.White, fontSize = 18.sp),
+            modifier = Modifier.padding(top = 18.dp))
     }
 }
 
 @Composable
-fun AddTextField(hint: String, sizeWidth: Dp, sizeHeight: Dp, singleLine:Boolean = true, keyboardType:KeyboardType = KeyboardType.Text){
-    val message = remember{mutableStateOf("")}
+fun AddTextField(
+    hint: String,
+    sizeWidth: Dp,
+    sizeHeight: Dp,
+    singleLine: Boolean = true,
+    keyboardType: KeyboardType = KeyboardType.Text,
+) {
+    val message = remember { mutableStateOf("") }
     OutlinedTextField(
         modifier = Modifier
             .size(sizeWidth, sizeHeight),
         value = message.value,
-        onValueChange =  { message.value = it },
+        onValueChange = { message.value = it },
         textStyle = TextStyle(color = Color.Gray, fontSize = 14.sp),
-        placeholder = { Text(hint, style = TextStyle(color = Color.Gray, fontSize = 14.sp))},
+        placeholder = { Text(hint, style = TextStyle(color = Color.Gray, fontSize = 14.sp)) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Color.Gray,
             unfocusedBorderColor = LightGray,
@@ -343,16 +402,27 @@ fun AddTextField(hint: String, sizeWidth: Dp, sizeHeight: Dp, singleLine:Boolean
 }
 
 @Composable
-fun AddTextFieldIcon(hint: String, sizeWidth: Dp, sizeHeight: Dp, icon: Int = -1, singleLine:Boolean = true, keyboardType:KeyboardType = KeyboardType.Text){
-    val message = remember{mutableStateOf("")}
+fun AddTextFieldIcon(
+    hint: String,
+    sizeWidth: Dp,
+    sizeHeight: Dp,
+    icon: Int = -1,
+    singleLine: Boolean = true,
+    keyboardType: KeyboardType = KeyboardType.Text,
+) {
+    val message = remember { mutableStateOf("") }
     OutlinedTextField(
         modifier = Modifier
             .size(sizeWidth, sizeHeight),
         value = message.value,
-        onValueChange =  { message.value = it },
+        onValueChange = { message.value = it },
         textStyle = TextStyle(color = Color.Gray, fontSize = 14.sp),
-        placeholder = { Text(hint, style = TextStyle(color = Color.Gray, fontSize = 14.sp))},
-        leadingIcon = { if(icon != -1) Icon(modifier = Modifier.size(20.dp,20.dp), painter = painterResource(id = icon), contentDescription = "date") },
+        placeholder = { Text(hint, style = TextStyle(color = Color.Gray, fontSize = 14.sp)) },
+        leadingIcon = {
+            if (icon != -1) Icon(modifier = Modifier.size(20.dp, 20.dp),
+                painter = painterResource(id = icon),
+                contentDescription = "date")
+        },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Color.Gray,
             unfocusedBorderColor = LightGray,
@@ -368,7 +438,7 @@ fun AddTextFieldIcon(hint: String, sizeWidth: Dp, sizeHeight: Dp, icon: Int = -1
 var list = listOf("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье")
 
 @Composable
-fun AddCheckBox(name:String){
+fun AddCheckBox(name: String) {
     val checkedState = remember { mutableStateOf(false) }
     Row(modifier = Modifier
         .size(198.dp, 38.dp)
@@ -386,16 +456,20 @@ fun AddCheckBox(name:String){
                 .background(Color.White)
                 .size(18.dp)
         )
-        Text(text = name, style = TextStyle(fontSize = 18.sp, color = Color.White), modifier = Modifier.padding(start = 18.dp))
+        Text(text = name,
+            style = TextStyle(fontSize = 18.sp, color = Color.White),
+            modifier = Modifier.padding(start = 18.dp))
     }
 }
 
 @Composable
-fun AddCheckBoxes(list:List<String>){
+fun AddCheckBoxes(list: List<String>) {
     Column(modifier = Modifier
         .size(208.dp, 368.dp)
         .background(Green), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Повторять каждый:", style = TextStyle(fontSize = 18.sp, color = Color.White), modifier = Modifier.padding(end = 28.dp))
+        Text(text = "Повторять каждый:",
+            style = TextStyle(fontSize = 18.sp, color = Color.White),
+            modifier = Modifier.padding(end = 28.dp))
         LazyColumn {
             list.map { item { AddCheckBox(it) } }
         }

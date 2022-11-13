@@ -144,34 +144,10 @@ fun Navigation(navController: NavHostController) {
             }) {
             UserLoginFragment(navController = navController)
         }
-        composable(route = NavigationItems.UserRegistration.route,
-            enterTransition = {
-                when(initialState.destination.route){
-                    NavigationItems.Profile.route -> scaleIn(animationSpec = tween(200))
-                    else -> null
-                }
-            },
-            exitTransition = {
-                when(targetState.destination.route){
-                    NavigationItems.Profile.route -> scaleOut(animationSpec = tween(200))
-                    else -> null
-                }
-            }) {
+        composable(route = NavigationItems.UserRegistration.route) {
             UserRegistrationFragment(navController = navController)
         }
-        composable(route = NavigationItems.EditAlarm.route,
-            enterTransition = {
-                when(initialState.destination.route){
-                    NavigationItems.Alarm.route -> scaleIn(animationSpec = tween(200))
-                    else -> null
-                }
-            },
-            exitTransition = {
-                when(targetState.destination.route){
-                    NavigationItems.Alarm.route -> scaleOut(animationSpec = tween(200))
-                    else -> null
-                }
-            }) {
+        composable(route = NavigationItems.EditAlarm.route) {
             EditAlarmFragment(navController = navController)
         }
         composable(route = NavigationItems.CreateAlarm.route,
